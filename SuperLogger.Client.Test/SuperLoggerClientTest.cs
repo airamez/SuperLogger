@@ -7,8 +7,9 @@ namespace SuperLogger.Client.Test
     public class SuperLoggerClientTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void InfoTest()
         {
+            SuperLoggerClient.Info("Info message");
         }
     }
 }
