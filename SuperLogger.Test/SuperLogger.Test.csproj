@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3E1D0E89-FE75-4ABF-9578-C2B0802E1BB7}</ProjectGuid>
+    <ProjectGuid>{CEC9BE06-B212-4D61-9315-C855AC226334}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperLogger.Client.Test</RootNamespace>
-    <AssemblyName>SuperLogger.Client.Test</AssemblyName>
+    <RootNamespace>SuperLogger.Test</RootNamespace>
+    <AssemblyName>SuperLogger.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -57,6 +57,10 @@
     <ProjectReference Include="..\SuperLogger.Client\SuperLogger.Client.csproj">
       <Project>{da9c5b28-0949-4101-a38d-223d499ef251}</Project>
       <Name>SuperLogger.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SuperLogger.Model\SuperLogger.Model.csproj">
+      <Project>{6dc79342-e1bc-4d0a-9b1c-e04b04a99cc8}</Project>
+      <Name>SuperLogger.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

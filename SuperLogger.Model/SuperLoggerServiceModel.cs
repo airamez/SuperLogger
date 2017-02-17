@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperLogger.Model
 {
-    public class SuperLoggerModel
+    public class SuperLoggerServiceModel
     {
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SuperLogger.Client;
 
-namespace SuperLogger.Client.Test
+namespace SuperLogger.Test
 {
     [TestClass]
     public class SuperLoggerClientTest
@@ -10,6 +11,12 @@ namespace SuperLogger.Client.Test
         public void InfoTest()
         {
             SuperLoggerClient.Info("Info message");
+        }
+
+        [TestMethod]
+        public void DBTest()
+        {
+
         }
     }
 }

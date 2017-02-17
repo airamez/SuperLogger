@@ -40,8 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SuperLoggerModel.cs" />
+    <Compile Include="SuperLoggerDbModel.cs" />
+    <Compile Include="SuperLoggerServiceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SuperLogger.Helper\SuperLogger.Helper.csproj">
+      <Project>{d0d3b735-2177-4de7-b00d-af2d3b862202}</Project>
+      <Name>SuperLogger.Helper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

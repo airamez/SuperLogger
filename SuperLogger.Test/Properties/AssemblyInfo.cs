@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SuperLogger.Client.Test")]
+[assembly: AssemblyTitle("SuperLogger.Test")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SuperLogger.Client.Test")]
+[assembly: AssemblyProduct("SuperLogger.Test")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3e1d0e89-fe75-4abf-9578-c2b0802e1bb7")]
+[assembly: Guid("cec9be06-b212-4d61-9315-c855ac226334")]
 
 // Version information for an assembly consists of the following four values:
 //

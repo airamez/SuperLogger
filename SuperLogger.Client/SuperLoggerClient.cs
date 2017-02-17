@@ -9,19 +9,21 @@ using System.Diagnostics;
 using RabbitMQ.Client;
 using Newtonsoft.Json;
 
+using SuperLogger.Helper;
+
 namespace SuperLogger.Client
 {
     public static class SuperLoggerClient
     {
 
-        private static string RMQ_SETTINGS_KEY_NAME = "RMQ.Settings";
+        private static string RMQ_SETTINGS_KEY_NAME = "Superlog.RMQ.Settings";
         private static RmqSettings _rmqSettings;
 
         static SuperLoggerClient()
         {
             try
             {
-                _rmqSettings = JsonConvert.DeserializeObject<RmqSettings>(GetAppSettings(RMQ_SETTINGS_KEY_NAME));
+                _rmqSettings = JsonConvert.DeserializeObject<RmqSettings>(SuperLoggerHelper.GetAppSettings(RMQ_SETTINGS_KEY_NAME));
             }
             catch (Exception ex)
             {
@@ -48,18 +50,8 @@ namespace SuperLogger.Client
             return _rmqModel;
         }
 
-        private static string GetAppSettings(string keyName)
-        {
-            string value = ConfigurationManager.AppSettings[keyName];
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                throw new Exception(string.Format("Key {0} not found on configuration file.", RMQ_SETTINGS_KEY_NAME));
-            }
-            return value;
-        }
-
         // @todo: Add a generic dictionary parameter to allow list of names and values
-        public static void Info (string message)
+        public static void Info(string message)
         {
             SendMessage(message);
         }
@@ -74,13 +66,14 @@ namespace SuperLogger.Client
                 rmqModel = OpenRmqModel(rmqConn);
                 byte[] messageBodyBytes = System.Text.Encoding.UTF8.GetBytes(message);
                 rmqModel.BasicPublish(_rmqSettings.Exchange, _rmqSettings.RoutingKey, null, messageBodyBytes);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 string source = "Supper Logger";
                 string log = "Application";
                 string eventMessage = string.Format("Error: {0} \nStack Trace: {1}", ex.Message, ex.StackTrace);
 
-                // This requires admin privilege
+                // @todo: This requires admin privilege. Check how to make it work always
                 if (!EventLog.SourceExists(source))
                     EventLog.CreateEventSource(source, log);
                 EventLog.WriteEntry(source, eventMessage, EventLogEntryType.Error);
@@ -93,10 +86,14 @@ namespace SuperLogger.Client
 
         private static void CloseRmqConnection(IConnection rmqConn)
         {
-            if (rmqConn != null && rmqConn.IsOpen)
+            try
             {
-                rmqConn.Close();
+                if (rmqConn != null && rmqConn.IsOpen)
+                {
+                    rmqConn.Close();
+                }
             }
+            catch { }
         }
 
         // @todo: Add a generic dictionary parameter to allow list of names and values
