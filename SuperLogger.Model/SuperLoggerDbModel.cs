@@ -12,16 +12,7 @@ namespace SuperLogger.Model
 {
     public class SuperLoggerDbModel : IDisposable
     {
-        private string SQL_CONNECTION_STRING = "Superlog.SQL.ConnectionString";
-
         private SqlConnection _sqlConnection { set; get; }
-
-        public enum LogType
-        {
-            INFO = 1,
-            WARN = 2,
-            ERROR = 3
-        }
 
         public SuperLoggerDbModel()
         {
@@ -34,7 +25,7 @@ namespace SuperLogger.Model
             {
                 if (_sqlConnection == null || _sqlConnection.State != System.Data.ConnectionState.Open)
                 {
-                    string connectionString = SuperLoggerHelper.GetAppSettings(SQL_CONNECTION_STRING);
+                    string connectionString = SuperLoggerHelper.GetAppSettings(SuperLoggerHelper.SQL_CONNECTION_STRING);
                     _sqlConnection = new SqlConnection(connectionString);
                     _sqlConnection.Open();
                 }
@@ -56,11 +47,11 @@ namespace SuperLogger.Model
             catch { }
         }
 
-        public void AddLogEntry(string message, LogType type, List<KeyValuePair<string, string>> data = null) {
+        public void AddLogEntry(string message, LogType type, IDictionary<string, string> data = null) {
             AddLogEntry(null, message, type, data);
         }
 
-        public void AddLogEntry(string source, string message, LogType type, List<KeyValuePair<string, string>> data = null)
+        public void AddLogEntry(string source, string message, LogType type, IDictionary<string, string> data = null)
         {
             using (TransactionScope scope = new TransactionScope())
             {
@@ -82,7 +73,7 @@ namespace SuperLogger.Model
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Source", source);
             cmd.Parameters.AddWithValue("@Message", message);
-            cmd.Parameters.AddWithValue("@Type", GetLogEntryTypeForSQL(type));
+            cmd.Parameters.AddWithValue("@Type", SuperLoggerHelper.GetLogEntryTypeText(type));
             SqlParameter LogId = new SqlParameter("@LogEntryID", System.Data.SqlDbType.Int);
             LogId.Direction = System.Data.ParameterDirection.Output;
             cmd.Parameters.Add(LogId);
@@ -99,19 +90,6 @@ namespace SuperLogger.Model
             cmd.Parameters.AddWithValue("@Name", name);
             cmd.Parameters.AddWithValue("@Value", value);
             cmd.ExecuteNonQuery();
-        }
-
-        private string GetLogEntryTypeForSQL(LogType type)
-        {
-            if (type == LogType.ERROR)
-            {
-                return "E";
-            } else if (type == LogType.INFO) {
-                return "I";
-            } else
-            {
-                return "W";
-            }
         }
 
         public void Dispose()

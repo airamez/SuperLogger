@@ -58,6 +58,10 @@
       <Project>{da9c5b28-0949-4101-a38d-223d499ef251}</Project>
       <Name>SuperLogger.Client</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SuperLogger.Helper\SuperLogger.Helper.csproj">
+      <Project>{d0d3b735-2177-4de7-b00d-af2d3b862202}</Project>
+      <Name>SuperLogger.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SuperLogger.Model\SuperLogger.Model.csproj">
       <Project>{6dc79342-e1bc-4d0a-9b1c-e04b04a99cc8}</Project>
       <Name>SuperLogger.Model</Name>
