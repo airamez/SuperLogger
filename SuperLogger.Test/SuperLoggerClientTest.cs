@@ -47,13 +47,14 @@ namespace SuperLogger.Test
             {
                 data.Add(new KeyValuePair<string, string>("Name.NOSOURCE." + i.ToString(), "Value." + i.ToString()));
             }
-            dbModel.AddLogEntry("Message 1", LogType.INFO, data);
+            dbModel.AddLogEntry("Test", "I", Guid.NewGuid().ToString(), DateTime.Now, "Message 1", "StackTrace", data);
         }
 
         [TestMethod]
         public void ServiceModelTest()
         {
-//            SuperLoggerServiceModel service = new SuperLoggerServiceModel();
+            SuperLoggerServiceModel service = new SuperLoggerServiceModel();
+            service.Run();
         }
     }
 }

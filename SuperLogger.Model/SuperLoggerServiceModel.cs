@@ -15,32 +15,45 @@ namespace SuperLogger.Model
 {
     public class SuperLoggerServiceModel
     {
+        public static bool Running { set; get; }
         private IConnection _rmqConnection { set; get; }
+        private IModel _rmqChannel;
 
-        public SuperLoggerServiceModel ()
+        public SuperLoggerServiceModel()
         {
-            PrepareRMQ();
+            Running = true;
         }
 
-        private void PrepareRMQ()
+        public void Run()
         {
-            //_rmqConnection = SuperLoggerHelper.GetRmqConnection();
-            //IModel rmqChannel = _rmqConnection.CreateModel();
-            //rmqChannel.QueueDeclare(SuperLoggerHelper.QueueName, true, false, false, null);
-            //var rmqConsumer = new QueueingBasicConsumer(rmqChannel);
-            //rmqChannel.BasicConsume(SuperLoggerHelper.QueueName, false, rmqConsumer);
-            //var message = rmqConsumer.Queue.Dequeue();
-
-            //byte[] body = message.Body;
-            //var payload = Encoding.UTF8.GetString(body);
-
-            //var rmqConsumer = new EventingBasicConsumer(rmqChannel);
-            //rmqConsumer.Received += (model, ea) =>
-            //{
-            //    var body = ea.Body;
-            //    var message = Encoding.UTF8.GetString(body);
-            //};
-
+            _rmqConnection = SuperLoggerHelper.GetRmqConnection();
+            _rmqChannel = _rmqConnection.CreateModel();
+//            _rmqChannel.QueueDeclare(SuperLoggerHelper.QueueName, true, false, false, null);
+            QueueingBasicConsumer rmqConsumer = new QueueingBasicConsumer();
+            _rmqChannel.BasicConsume(SuperLoggerHelper.QueueName, false, rmqConsumer);
+            while (Running)
+            {
+                //@todo: Catch exception from RMQ and reconnect
+                BasicDeliverEventArgs message = rmqConsumer.Queue.Dequeue();
+                try
+                {
+                    var body = message.Body;
+                    var payload = Encoding.UTF8.GetString(body);
+                    RmqMessageContent messageContent = JsonConvert.DeserializeObject<RmqMessageContent>(payload);
+                    SuperLoggerDbModel dbModel = new SuperLoggerDbModel();
+                    dbModel.AddLogEntry(messageContent.Source,
+                                        messageContent.LogType,
+                                        messageContent.CorrelationID,
+                                        JsonConvert.DeserializeObject<DateTime>(messageContent.CreatedOn),
+                                        messageContent.Message,
+                                        messageContent.StackTrace,
+                                        messageContent.Data);
+                    _rmqChannel.BasicAck(message.DeliveryTag, false);
+                } catch (Exception ex)
+                {
+                    _rmqChannel.BasicReject(message.DeliveryTag, true);
+                }
+            }
         }
     }
 }

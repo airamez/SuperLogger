@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LogType.cs" />
+    <Compile Include="RmqMessageContent.cs" />
     <Compile Include="RmqSettings.cs" />
     <Compile Include="SuperLoggerHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

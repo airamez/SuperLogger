@@ -47,15 +47,12 @@ namespace SuperLogger.Model
             catch { }
         }
 
-        public void AddLogEntry(string message, LogType type, IDictionary<string, string> data = null) {
-            AddLogEntry(null, message, type, data);
-        }
-
-        public void AddLogEntry(string source, string message, LogType type, IDictionary<string, string> data = null)
+        public void AddLogEntry(string source, string type, string correlationId, DateTime createdOn,
+                                string message, string stackTrace, IDictionary<string, string> data = null)
         {
             using (TransactionScope scope = new TransactionScope())
             {
-                int logEnteyId = ExecuteProcedureAddLogEntry(source, message, type);
+                int logEnteyId = ExecuteProcedureAddLogEntry(source, type, correlationId, createdOn, message, stackTrace);
 
                 if (data != null)
                 {
@@ -67,13 +64,16 @@ namespace SuperLogger.Model
             }
         }
 
-        private int ExecuteProcedureAddLogEntry(string source, string message, LogType type)
+        private int ExecuteProcedureAddLogEntry(string source, string type, string correlationId, DateTime createdOn, string message, string stackTrace)
         {
             SqlCommand cmd = new SqlCommand("AddLogEntry", _sqlConnection);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@Source", source);
+            cmd.Parameters.AddWithValue("@Type", type);
+            cmd.Parameters.AddWithValue("@CorrelationID", correlationId);
+            cmd.Parameters.AddWithValue("@CreatedOn", createdOn);
             cmd.Parameters.AddWithValue("@Message", message);
-            cmd.Parameters.AddWithValue("@Type", SuperLoggerHelper.GetLogEntryTypeText(type));
+            cmd.Parameters.AddWithValue("@StackTrace", stackTrace);
             SqlParameter LogId = new SqlParameter("@LogEntryID", System.Data.SqlDbType.Int);
             LogId.Direction = System.Data.ParameterDirection.Output;
             cmd.Parameters.Add(LogId);

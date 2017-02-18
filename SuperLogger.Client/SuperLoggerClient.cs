@@ -38,7 +38,7 @@ namespace SuperLogger.Client
 
         public static void Info(string source, string message, IDictionary<string, string> data = null, bool? throwExceptions = null)
         {
-            SendMessage(LogType.INFO, source, message, null, data);
+            SendMessage(SuperLoggerHelper.GetLogEntryTypeText(LogType.INFO), source, message, null, data);
         }
 
         public static void Error(string source, string message, string stackTrace, IDictionary<string, string> data = null)
@@ -46,7 +46,7 @@ namespace SuperLogger.Client
 
         }
 
-        private static void SendMessage(LogType type, 
+        private static void SendMessage(string type, 
                                         string source, 
                                         string message, 
                                         string stackTrace, 
@@ -92,10 +92,10 @@ namespace SuperLogger.Client
             }
         }
 
-        private static RmqMessageContent PrepareMessageContent(LogType type, string source, string message, string stackTrace, IDictionary<string, string> data)
+        private static RmqMessageContent PrepareMessageContent(string type, string source, string message, string stackTrace, IDictionary<string, string> data)
         {
             RmqMessageContent messageContent = new RmqMessageContent();
-            messageContent.Type = SuperLoggerHelper.GetLogEntryTypeText(type);
+            messageContent.LogType = type;
             messageContent.Source = source;
             messageContent.Message = message;
             messageContent.StackTrace = stackTrace;

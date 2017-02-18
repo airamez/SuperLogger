@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperLogger.Client
+namespace SuperLogger.Helper
 {
     public class RmqMessageContent
     {
-        public string Type { get; set; }
+        public string LogType { get; set; }
         public string CorrelationID { get; set; }
         public string CreatedOn { get; set; }
         public string Source { get; set; }
