@@ -33,6 +33,10 @@ data.Add(new KeyValuePair<string, string>("Param 1", "Value 1"));
 data.Add(new KeyValuePair<string, string>("Param 2", "Value 2"));
 data.Add(new KeyValuePair<string, string>("Param 3", "Value 3"));
 SuperLoggerClient.Info("MySource", "My logging message", data);
+
+// Indicating to capture exceptions
+SuperLoggerClient.Info("MySource", "Loggin Message", null, true);
+
 ```
 
 ## Message bus (Rabbit MQ)
@@ -63,7 +67,7 @@ The message payload is represented by a JSON object and invalid messages will be
 
 ## Database
 As expected the database is where all the logging request will land and there are only three tables: LogSource, Log and LogData.
-The SQL operation are implemented as stoed procedure aiming for max performance.
+The SQL operation are implemented as stored procedures aiming for max performance.
 The tables and fields are listed below:
 ```
 LogSource: 
