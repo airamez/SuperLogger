@@ -19,7 +19,7 @@ For each log request a message is published to the message bus.
 The source parameter is required and each source will be created the first time is used.
 
 Examples:
-```// Simple INFO log
+// Simple INFO log
 SuperLoggerClient.Info("MySource", "Loggin Message");
 
 // Using a Correlation ID
@@ -32,7 +32,7 @@ data.Add(new KeyValuePair<string, string>("Param 1", "Value 1"));
 data.Add(new KeyValuePair<string, string>("Param 2", "Value 2"));
 data.Add(new KeyValuePair<string, string>("Param 3", "Value 3"));
 SuperLoggerClient.Info("MySource", "My logging message", data);
-```
+
 
 ## Message bus (Rabbit MQ)
 The message bus is responsible to collect all logging requests and store them until they are fully processed by the integration service and stored into the database.
