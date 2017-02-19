@@ -66,10 +66,26 @@ As expected the database is where all the logging request will land and there ar
 The SQL operation are implemented as stoed procedure aiming for max performance.
 The tables and fields are listed below:
 ```
-LogSource: ID and Name
-Log: ID, CreatedOn, Source (LogSource FK), Type ('I' = Info; 'W' = Warning; 'E' = Error), Message, Correlation ID, StackTrace
-LogData: ID, Name, Value and Log (Log FK)
+LogSource: 
+    ID
+    Name
+Log: 
+    ID
+    CreatedOn
+    Source (LogSource FK)
+    Type ('I' = Info; 'W' = Warning; 'E' = Error)
+    Message
+    Correlation ID
+    StackTrace
+LogData: 
+    ID
+    Name
+    Value
+    Log (Log FK)
 ```
 
 # Installation instructions
+Coming soon
 
+# TODO list
+Coming soon
