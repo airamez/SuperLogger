@@ -63,10 +63,13 @@ The message payload is represented by a JSON object and invalid messages will be
 
 ## Database
 As expected the database is where all the logging request will land and there are only three tables: LogSource, Log and LogData.
+The SQL operation are implemented as stoed procedure aiming for max performance.
 The tables and fields are listed below:
+```
 LogSource: ID and Name
 Log: ID, CreatedOn, Source (LogSource FK), Type ('I' = Info; 'W' = Warning; 'E' = Error), Message, Correlation ID, StackTrace
 LogData: ID, Name, Value and Log (Log FK)
+```
 
 # Installation instructions
 
