@@ -28,10 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            this.SuperLoggerEventLog = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.SuperLoggerEventLog)).BeginInit();
+            // 
+            // SuperLoggerService
+            // 
+            this.ServiceName = "SuperLogger";
+            ((System.ComponentModel.ISupportInitialize)(this.SuperLoggerEventLog)).EndInit();
         }
 
         #endregion
+
+        private System.Diagnostics.EventLog SuperLoggerEventLog;
     }
 }

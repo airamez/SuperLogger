@@ -14,7 +14,7 @@ namespace SuperLogger.Test
         //@todo: Create real unit test. Those are not unit test :P
 
         [TestMethod]
-        public void InfoTest()
+        public void LogInfoTest()
         {
             SuperLoggerClient.CorrelationID = Guid.NewGuid().ToString();
 

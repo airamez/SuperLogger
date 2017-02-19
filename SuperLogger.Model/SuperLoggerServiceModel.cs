@@ -15,7 +15,7 @@ namespace SuperLogger.Model
 {
     public class SuperLoggerServiceModel
     {
-        public static bool Running { set; get; }
+        private bool Running { set; get; }
         private IConnection _rmqConnection { set; get; }
         private IModel _rmqChannel;
 
@@ -24,16 +24,23 @@ namespace SuperLogger.Model
             Running = true;
         }
 
+        public void Stop()
+        {
+            Running = false;
+        }
+
         public void Run()
         {
             _rmqConnection = SuperLoggerHelper.GetRmqConnection();
             _rmqChannel = _rmqConnection.CreateModel();
-//            _rmqChannel.QueueDeclare(SuperLoggerHelper.QueueName, true, false, false, null);
+             _rmqChannel.QueueDeclare(SuperLoggerHelper.QueueName, true, false, false, null);
+            //@todo: QueueingBasicConsumer is obsolete and impacts the performance. It has to be replaced
             QueueingBasicConsumer rmqConsumer = new QueueingBasicConsumer();
             _rmqChannel.BasicConsume(SuperLoggerHelper.QueueName, false, rmqConsumer);
             while (Running)
             {
                 //@todo: Catch exception from RMQ and reconnect
+                //@todo: Add mechanism to deal with bad messages and put the service to sleep in case of RMQ or SQL failures
                 BasicDeliverEventArgs message = rmqConsumer.Queue.Dequeue();
                 try
                 {

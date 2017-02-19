@@ -59,7 +59,8 @@ namespace SuperLogger.Client
             {
                 rmqConn = SuperLoggerHelper.GetRmqConnection();
                 rmqModel = rmqConn.CreateModel();
-                // @Maybe this is unecessary and impact performance. It will require pre rabbit mq configuration
+                // @This is unecessary and may impact performance. It will require pre rabbit mq configuration to create the Ex
+                // Better to move this to a initialization area
                 //rmqModel.ExchangeDeclare(SuperLoggerHelper.Exchange, ExchangeType.Direct);
                 //rmqModel.QueueDeclare(SuperLoggerHelper.QueueName, true, false, false, null);
                 //rmqModel.QueueBind(SuperLoggerHelper.QueueName, SuperLoggerHelper.Exchange, SuperLoggerHelper.RoutingKey, null);
