@@ -1,5 +1,5 @@
 # SuperLogger
-The idea for this project come from a requirement to provide an assynchronous, high avaiability, high performance and load balance logging mechanisn for .Net solution and Dynamic CRM (Plugins and Workflow Activities). The goal is to provide a logging solution that can handle thousands of logging requests simultaneously and impacting as less as possible the client applications.
+The idea for this project come from a requirement to provide an asynchronous, high availability, high performance and load balance logging mechanism for .Net solution and Dynamic CRM (Plugins and Workflow Activities). The goal is to provide a logging solution that can handle thousands of logging requests simultaneously and impacting as less as possible the client applications.
 
 **I really hope this project will help someone out there :P**
 
@@ -21,10 +21,10 @@ Examples:
 SuperLoggerClient.Info("MySource", "Loggin Message");
 
 // Using a Correlation ID
-SuperLoggerClient.CorrelationID = Guid.NewGuid().ToString(); // After this point all log request will have the same Correlation ID
+SuperLoggerClient.CorrelationID = Guid.NewGuid().ToString(); // After this point all log requests will have the same Correlation ID
 SuperLoggerClient.Info("MySource", "Loggin Message");
 
-// Providing a parameters from a IDictionary
+// Providing parameters from a IDictionary
 IDictionary<string, string> data = new Dictionary<string, string>();
 data.Add(new KeyValuePair<string, string>("Param 1", "Value 1"));
 data.Add(new KeyValuePair<string, string>("Param 2", "Value 2"));
@@ -32,7 +32,11 @@ data.Add(new KeyValuePair<string, string>("Param 3", "Value 3"));
 SuperLoggerClient.Info("MySource", "My logging message", data);
 
 // Indicating to capture exceptions
-SuperLoggerClient.Info("MySource", "Loggin Message", null, true);
+try {
+   SuperLoggerClient.Info("MySource", "Loggin Message", null, true);
+} catch (Exception e) {
+   Console.WriteLine("Error logging");
+}
 
 ```
 
@@ -89,7 +93,7 @@ LogData:
 
 # How to use
 
-1. Create a SQL Server Database and execute the sql statement from the DatabaseScripts.sql file.
+1. Create a SQL Server Database and execute the SQL statement from the DatabaseScripts.sql file.
    - That will create the tables and stored procedures.
 2. Build the solution to generate the projects DLLs
 3. Install RabbitMQ
@@ -99,11 +103,11 @@ LogData:
    - Create a fanout exchange. e.g. SuperLogger.fanout
    - Create a queue. e.g. SuperLogger
    - Bind the fanout to the queue. 
-   - Remeber to take note of the routing key. e.g. super_logger
+   - Remember to take note of the routing key. e.g. super_logger
 5. Update the Windows Service app.config file
    - Add the correct information on the Rabbit MQ key
    - Add the correct information on the SQL Server connection string key
-6. Install thw windows Service
+6. Install the windows Service
    - Instructions here: https://msdn.microsoft.com/en-us/library/sd8zc8ha(v=vs.110).aspx
 7. User the client API
    - Add the following key to you client application configuration file
@@ -119,4 +123,8 @@ LogData:
            "Queue"       : "SuperLogger"}'/>
 ```
 # TODO list
-Check all the TODOs from the souce code
+
+1. Review all the TODOs from the source code;
+2. Add the option to call the log method asynchronous;
+3. Finish the unit testing;
+4. Prepare a stress test;
