@@ -39,6 +39,8 @@ SuperLoggerClient.Info("MySource", "My logging message", data);
 The message bus is responsible to collect all logging requests and store them until they are fully processed by the integration service and stored into the database.
 
 Example of a message payload:
+
+```json
 {
 	"LogType": "I",
 	"CorrelationID": "b376e829-13ee-4411-81b8-14a689789072",
@@ -52,6 +54,7 @@ Example of a message payload:
 		"Param 3": "Value 3"
 	}
 }
+```
 
 ## Windows Logging Service
 It is a windows service that subscribes to the message bus and process all valid messages storing them into the database.
