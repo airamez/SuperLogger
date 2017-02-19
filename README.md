@@ -5,7 +5,7 @@ SuperLogger is a .Net C# logging solution aiming high avaiability, performance a
 The project idea come a requirement to provide an assynchronous logging mechanisn for .Net solution and Dynamic CRM Plugins and Workflow Activities.
 The idea came from the limitation where CRM Online does not allow C# code to access the file system making really hard to use logging APIs lke Log4Net.
 The Log4Net API is flexible enough to allow the creation of appenders however I decided to create a specific logging API to provide some functionality required for the projects I am working on.
-I hope this project will help someone out there :P
+I really hope this project will help someone out there :P
 
 # The solution is devided into the following components:
 1. C# client API;
