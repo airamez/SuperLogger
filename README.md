@@ -87,8 +87,35 @@ LogData:
     Log (Log FK)
 ```
 
-# Installation instructions
-Coming soon
+# How to use
+
+1. Create a SQL Server Database and execute the sql statement from the DatabaseScripts.sql file.
+   That will create the tables and stored procedures.
+2. Build the solution to generate the projects DLLs
+3. Install RabbitMQ
+   Instructions here: https://www.rabbitmq.com/download.html
+4. Setup the RabbitMQ 
+   - Instructions about how to setup the RMQ Management plugin here: https://www.rabbitmq.com/management.html
+   - Create a fanout exchange. e.g. SuperLogger.fanout
+   - Create a queue. e.g. SuperLogger
+   - Bind the fanout to the queue. Remeber to take not of the routing key. e.g. super_logger
+5. Update the Windows Service app.config file
+   - Add the correct information on the Rabbit MQ key
+   - Add the correct information on the SQL Server connection string key
+6. Install thw windows Service
+   - Instructions here: https://msdn.microsoft.com/en-us/library/sd8zc8ha(v=vs.110).aspx
+7. User the client API
+   - Add the following key to you client application configuration file
+		<add key="SuperLogger.RMQ.Settings"
+			 value='{ "HostName"    : "localhost",
+					  "VirtualHost" : "/",
+					  "Port"        : 5672,
+					  "Exchange"    : "SuperLogger.fanout",
+					  "UserName"    : "guest",
+					  "Password"    : "Myrmq",
+					  "RoutingKey"  : "super_logger",
+					  "Queue"       : "SuperLogger"
+					}'/>
 
 # TODO list
-Coming soon
+Check all the TODOs from the souce code

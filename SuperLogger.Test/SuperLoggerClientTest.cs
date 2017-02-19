@@ -36,6 +36,8 @@ namespace SuperLogger.Test
 
             SuperLoggerClient.CorrelationID = null;
             SuperLoggerClient.Info("MySource", "Info message: " + DateTime.Now);
+
+            SuperLoggerClient.Info("MySource", "Loggin Message", null, true);
         }
 
         [TestMethod]

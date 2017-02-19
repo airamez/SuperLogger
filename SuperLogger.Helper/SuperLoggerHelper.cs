@@ -84,21 +84,5 @@ namespace SuperLogger.Helper
             var _rmqConn = _rmqFactory.CreateConnection();
             return _rmqConn;
         }
-
-        public static string GetLogEntryTypeText(LogType type)
-        {
-            if (type == LogType.ERROR)
-            {
-                return "E";
-            }
-            else if (type == LogType.INFO)
-            {
-                return "I";
-            }
-            else
-            {
-                return "W";
-            }
-        }
     }
 }

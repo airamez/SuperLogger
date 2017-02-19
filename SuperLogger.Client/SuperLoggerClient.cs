@@ -14,10 +14,17 @@ using SuperLogger.Helper;
 
 namespace SuperLogger.Client
 {
+    /// <summary>
+    /// SuperLogger main class provinding static methods for logging
+    /// </summary>
     public static class SuperLoggerClient
     {
 
         private static string _correlationID;
+
+        private const string INFO = "I";
+        private const string WARN = "W";
+        private const string ERROR = "E";
 
         static SuperLoggerClient()
         {
@@ -36,22 +43,210 @@ namespace SuperLogger.Client
             }
         }
 
-        public static void Info(string source, string message, IDictionary<string, string> data = null, bool? throwExceptions = null)
+        /// <summary>
+        /// Logs as INFO
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        public static void Info(string source, string message)
         {
-            SendMessage(SuperLoggerHelper.GetLogEntryTypeText(LogType.INFO), source, message, null, data);
+            SendMessage(INFO, source, message, null, null, false);
         }
 
-        public static void Error(string source, string message, string stackTrace, IDictionary<string, string> data = null)
+        /// <summary>
+        /// Logs as INFO
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        /// <param name="data">Parameters list</param>
+        public static void Info(string source, string message, IDictionary<string, string> data)
         {
-
+            SendMessage(INFO, source, message, null, data, false);
         }
+
+        /// <summary>
+        /// Logs as INFO
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        /// <param name="throwExceptions">Flag indicating if the client code want to capture exception from the logging API</param>
+        public static void Info(string source, string message, bool throwExceptions)
+        {
+            SendMessage(INFO, source, message, null, null, throwExceptions);
+        }
+
+        /// <summary>
+        /// Logs as INFO
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        /// <param name="data">Parameters list</param>
+        /// <param name="throwExceptions">Flag indicating if the client code want to capture exception from the logging API</param>
+        public static void Info(string source, string message, IDictionary<string, string> data, bool throwExceptions)
+        {
+            SendMessage(INFO, source, message, null, data, throwExceptions);
+        }
+
+        /// <summary>
+        /// Log as Warning
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        public static void Warn(string source, string message)
+        {
+            SendMessage(WARN, source, message, null, null, false);
+        }
+
+        /// <summary>
+        /// Log as Warning
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        /// <param name="data">Parameters list</param>
+        public static void Warn(string source, string message,
+                                IDictionary<string, string> data)
+        {
+            SendMessage(WARN, source, message, null, data, false);
+        }
+
+        /// <summary>
+        /// Log as Warning
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        /// <param name="throwExceptions">Flag indicating if the client code want to capture exception from the logging API</param>
+        public static void Warn(string source, string message,
+                                bool throwExceptions)
+        {
+            SendMessage(WARN, source, message, null, null, false);
+        }
+
+        /// <summary>
+        /// Log as Warning
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        /// <param name="data">Parameters list</param>
+        /// <param name="throwExceptions">Flag indicating if the client code want to capture exception from the logging API</param>
+        public static void Warn(string source, string message,
+                                IDictionary<string, string> data,
+                                bool throwExceptions)
+        {
+            SendMessage(WARN, source, message, null, data, throwExceptions);
+        }
+
+        /// <summary>
+        /// Log as ERROR
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        public static void Error(string source, string message)
+        {
+            SendMessage(ERROR, source, message, null, null, false);
+        }
+
+        /// <summary>
+        /// Log as ERROR
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="Exception">Exception. The Exception.Message and the Exception.StackTrace will be used automatically</param>
+        public static void Error(string source, Exception exception)
+        {
+            SendMessage(ERROR, source, exception.Message, exception.StackTrace, null, false);
+        }
+
+        /// <summary>
+        /// Log as ERROR
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        /// <param name="data">Parameters list</param>
+        public static void Error(string source,
+                                 Exception exception,
+                                 IDictionary<string, string> data)
+        {
+            SendMessage(ERROR, source, exception.Message, exception.StackTrace, data, false);
+        }
+
+
+        /// <summary>
+        /// Log as ERROR
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="Exception">Exception. The Exception.Message and the Exception.StackTrace will be used automatically</param>
+        /// <param name="throwExceptions">Flag indicating if the client code want to capture exception from the logging API</param>
+        public static void Error(string source,
+                                 Exception exception,
+                                 bool throwExceptions)
+        {
+            SendMessage(ERROR, source, exception.Message, exception.StackTrace, null, throwExceptions);
+        }
+
+        /// <summary>
+        /// Log as ERROR
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="Exception">Exception. The Exception.Message and the Exception.StackTrace will be used automatically</param>
+        /// <param name="data">Parameters list</param>
+        /// <param name="throwExceptions">Flag indicating if the client code want to capture exception from the logging API</param>
+        public static void Error(string source,
+                                 Exception exception,
+                                 IDictionary<string, string> data,
+                                 bool throwExceptions)
+        {
+            SendMessage(ERROR, source, exception.Message, exception.StackTrace, data, throwExceptions);
+        }
+
+        /// <summary>
+        /// Log as ERROR
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        /// <param name="data">Parameters list</param>
+        /// <param name="throwExceptions">Flag indicating if the client code want to capture exception from the logging API</param>
+        public static void Error(string source, 
+                                 string message,
+                                 IDictionary<string, string> data)
+        {
+            SendMessage(ERROR, source, message, null, data, false);
+        }
+
+
+        /// <summary>
+        /// Log as ERROR
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        /// <param name="throwExceptions">Flag indicating if the client code want to capture exception from the logging API</param>
+        public static void Error(string source,
+                                 string message,
+                                 bool throwExceptions)
+        {
+            SendMessage(ERROR, source, message, null, null, throwExceptions);
+        }
+
+        /// <summary>
+        /// Log as ERROR
+        /// </summary>
+        /// <param name="source">Logging Source</param>
+        /// <param name="message">Message</param>
+        /// <param name="data">Parameters list</param>
+        /// <param name="throwExceptions">Flag indicating if the client code want to capture exception from the logging API</param>
+        public static void Error(string source,
+                                 string message,
+                                 IDictionary<string, string> data,
+                                 bool throwExceptions)
+        {
+            SendMessage(ERROR, source, message, null, data, throwExceptions);
+        }
+
 
         private static void SendMessage(string type, 
                                         string source, 
                                         string message, 
                                         string stackTrace, 
-                                        IDictionary<string, string> data = null, 
-                                        bool? throwExceptions = null)
+                                        IDictionary<string, string> data, 
+                                        bool throwExceptions)
         {
             IConnection rmqConn = null;
             IModel rmqModel = null;
@@ -59,7 +254,8 @@ namespace SuperLogger.Client
             {
                 rmqConn = SuperLoggerHelper.GetRmqConnection();
                 rmqModel = rmqConn.CreateModel();
-                // @This is unecessary and may impact performance. It will require pre rabbit mq configuration to create the Ex
+                // @todo: review this
+                // This is unecessary and may impact performance. It will require pre rabbit mq configuration to create the Ex
                 // Better to move this to a initialization area
                 //rmqModel.ExchangeDeclare(SuperLoggerHelper.Exchange, ExchangeType.Direct);
                 //rmqModel.QueueDeclare(SuperLoggerHelper.QueueName, true, false, false, null);
@@ -71,7 +267,7 @@ namespace SuperLogger.Client
             }
             catch (Exception ex)
             {
-                if (throwExceptions.HasValue && throwExceptions.Value)
+                if (throwExceptions)
                 {
                     throw;
                 }
