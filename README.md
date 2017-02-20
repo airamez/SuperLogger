@@ -18,11 +18,11 @@ The source parameter is required and each source will be created the first time 
 Examples:
 ```cs
 // Simple INFO log
-SuperLoggerClient.Info("MySource", "Loggin Message");
+SuperLoggerClient.Info("MySource", "Logging Message");
 
 // Using a Correlation ID
 SuperLoggerClient.CorrelationID = Guid.NewGuid().ToString(); // After this point all log requests will have the same Correlation ID
-SuperLoggerClient.Info("MySource", "Loggin Message");
+SuperLoggerClient.Info("MySource", "Logging Message");
 
 // Providing parameters from a IDictionary
 IDictionary<string, string> data = new Dictionary<string, string>();
@@ -33,7 +33,7 @@ SuperLoggerClient.Info("MySource", "My logging message", data);
 
 // Indicating to capture exceptions
 try {
-   SuperLoggerClient.Info("MySource", "Loggin Message", null, true);
+   SuperLoggerClient.Info("MySource", "Logging Message", null, true);
 } catch (Exception e) {
    Console.WriteLine("Error logging");
 }
